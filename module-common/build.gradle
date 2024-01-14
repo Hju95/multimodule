@@ -35,3 +35,17 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// common 같은 경우 다른 모듈에서 참조하는 모듈이기 때문에 mainapllication 이 필요가 없다
+// bootjar 으로 true 이면 main 을 찾기 때문에 에러가 난다 (현재 common 은 main이 없는 모듈임)
+tasks.bootJar { enabled = false}
+// 기본적으로 true 이기에 안적어도 되지만 명시적으로.. 컨벤션으로 적어준 것
+tasks.jar { enabled = true}
+
+// 위 순서대로
+// xxx.jar
+// xxx-plain.jar
+
+//plain 은 디펜던시를 가지고 있지 않다. 즉, 클래스와 리소스만을 가지고 있다.
+
+// ./gradlew clean :module-api:buildNeeded --stacktrace --info --refresh-dependencies -x test
